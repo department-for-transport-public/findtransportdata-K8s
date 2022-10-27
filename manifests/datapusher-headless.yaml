@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: datapusher-headless
+spec:
+  selector:
+    run: datapusher
+  clusterIP: None
+  clusterIPs:
+  - None
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: datapusher-headless
+    port: 8000
+    protocol: TCP
+    targetPort: 8000
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

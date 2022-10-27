@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: solr
+spec:
+  selector:
+    matchLabels:
+      run: solr
+  template:
+    metadata:
+      labels:
+        run: solr
+    spec:
+      containers:
+        - name: solr
+          image: solr:8.11.1
+          ports:
+            - containerPort: 8983
+          volumeMounts:
+          - name: solr-pvc
+            mountPath: /var/solr #<--- this is the data dir
+            readOnly: false
+# mount the init-configmap
+          - name: scripts-configmap
+            mountPath: /config/script
+            readOnly: true
+# mount the schema-configmap
+          - name: schema-configmap
+            mountPath: /config/schema
+            readOnly: true
+      volumes:
+        - name: "solr-pvc"
+          persistentVolumeClaim:
+            claimName: "solr-pvc"
+        - name: scripts-configmap
+          configMap:
+            name: scripts-configmap
+        - name: schema-configmap
+          configMap:
+            name: schema-configmap
+      initContainers:
+      - name: set-volume-ownsership
+        image: busybox:latest
+        command: ["sh", "-c", "chown -R 8983:8983 /var/solr"]# 92 is the uid and gid of ckan user/group
+        volumeMounts:
+        - name: solr-pvc
+          mountPath: /var/solr
+          readOnly: false
+      - name: init-solr-ckan
+        image: solr:8.11.1
+        command: ["sh", "-c", "bash /config/script/ckan_init_solr.sh"]
+        volumeMounts:
+        - name: solr-pvc
+          mountPath: /var/solr
+          readOnly: false
+# mount the init-configmap
+        - name: scripts-configmap
+          mountPath: /config/script
+          readOnly: true
+# mount the schema-configmap
+        - name: schema-configmap
+          mountPath: /config/schema
+          readOnly: true

@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: datapusher-master
+spec:
+  selector:
+    matchLabels:
+      run: datapusher
+  template:
+    metadata:
+      labels:
+        run: datapusher
+    spec:
+      containers:
+        - name: datapusher-headless
+          image: ghcr.io/keitaroinc/datapusher:0.0.17
+          ports:
+            - containerPort: 8000
+          env:
+          - name: DATAPUSHER_VERSION
+            value: "0.0.17"
+          - name: DATAPUSHER_MAX_CONTENT_LENGTH
+            value: "10485760"
+          - name: DATAPUSHER_CHUNK_SIZE
+            value: "16384"
+          - name: DATAPUSHER_CHUNK_INSERT_ROWS
+            value: "250"
+          - name: DATAPUSHER_DOWNLOAD_TIMEOUT
+            value: "30"
+          - name: DATAPUSHER_SSL_VERIFY
+            value: "False"
+          - name: DATAPUSHER_REWRITE_RESOURCES
+            value: "True"
+          - name: DATAPUSHER_REWRITE_URL
+            value: "http://ckan:5000"
+
