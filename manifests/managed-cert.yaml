@@ -4,4 +4,4 @@ metadata:
   name: managed-cert
 spec:
   domains:
-    - 85.62.160.34.bc.googleusercontent.com
+    - _DOMAINNAME
