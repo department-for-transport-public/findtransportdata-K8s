@@ -69,7 +69,7 @@ spec:
             value: "http://ckan:5000/"
 # Redis
           - name: CKAN__REDIS__URL
-            value: "redis://10.180.198.251:6379/0"
+            value: _CKAN_REDIS_URL
           volumeMounts:
           - name: ckan-data
             mountPath: /var/lib/ckan
