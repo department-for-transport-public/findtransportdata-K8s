@@ -20,7 +20,7 @@ steps:
     sed -i "s#_CONNECTIONNAME#${_CONNECTIONNAME}#g" manifests/connectionname_configmap.yaml
     sed -i "s#_CLOUDSQL_RESOURCE_NAME#${_CLOUDSQL_RESOURCE_NAME}#g" manifests/cloudsql-secrets.yaml
 
-## This step only applys the managed cert in dev/test
+## This step only applies the managed cert in dev/test
 - name: 'gcr.io/cloud-builders/git'
   id: Managed cert
   entrypoint: 'bash'
