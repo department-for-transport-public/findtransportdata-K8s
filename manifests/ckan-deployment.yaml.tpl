@@ -23,7 +23,16 @@ spec:
       containers:
         - name: ckan
           image: europe-docker.pkg.dev/dft-rsss-findtransptdata-dev/dft-nap/ckan_295:COMMIT_SHA
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 92
+          resources:
+            limits:
+               memory: 512Mi
+            requests:
+               memory: 256Mi
           ports:
+        - name: ckan-app  
             - containerPort: 5000
           env:
           - name: CKAN_SITE_ID
@@ -81,6 +90,11 @@ spec:
         # [START proxy_container]
         - name: cloudsql-proxy
           image: gcr.io/cloudsql-docker/gce-proxy:1.17
+          resources:
+            limits:
+              memory: 512Mi
+            requests:
+              memory: 256Mi
           command: ["/cloud_sql_proxy",
                     "-instances=$(INSTANCE_CONNECTION)=tcp:5432",
                     "-credential_file=/secrets/cloudsql/key.json"]
@@ -113,8 +127,16 @@ spec:
               secretProviderClass: "cloudsql-secrets"
       # [END volumes]
       initContainers:
-      - name: set-volume-ownsership
+      - name: set-volume-ownership
         image: busybox:latest
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 92
+        resources:
+          limits:
+            memory: 512Mi
+          requests:
+            memory: 256Mi
         command: ["sh", "-c", "chown -R 92:92 /var/lib/ckan"] # 92 is the uid and gid of ckan user/group
         volumeMounts:
         - name: ckan-data
