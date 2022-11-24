@@ -14,8 +14,13 @@ spec:
       containers:
         - name: datapusher-headless
           image: ghcr.io/keitaroinc/datapusher:0.0.17
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 92
           ports:
-            - containerPort: 8000
+           - name: data-app
+             containerPort: 8000
+             protocol: TCP
           env:
           - name: DATAPUSHER_VERSION
             value: "0.0.17"

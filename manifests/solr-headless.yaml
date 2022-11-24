@@ -15,7 +15,7 @@ spec:
   - name: solr-headless
     port: 8983
     protocol: TCP
-    targetPort: 8983
+    targetPort: solr-app
   sessionAffinity: None
   type: ClusterIP
 status:

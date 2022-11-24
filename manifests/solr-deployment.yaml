@@ -14,8 +14,18 @@ spec:
       containers:
         - name: solr
           image: solr:8.11.1
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 8983
+          resources:
+             limits:
+               memory: 512Mi
+             requests:
+               memory: 300Mi
           ports:
-            - containerPort: 8983
+           - name: solr-app
+             containerPort: 8983
+             protocol: TCP
           volumeMounts:
           - name: solr-pvc
             mountPath: /var/solr #<--- this is the data dir
@@ -41,6 +51,14 @@ spec:
       initContainers:
       - name: set-volume-ownsership
         image: busybox:latest
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 8983
+        resources:
+             limits:
+               memory: 512Mi
+             requests:
+               memory: 256Mi
         command: ["sh", "-c", "chown -R 8983:8983 /var/solr"]# 92 is the uid and gid of ckan user/group
         volumeMounts:
         - name: solr-pvc
