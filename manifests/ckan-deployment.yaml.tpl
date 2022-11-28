@@ -32,8 +32,8 @@ spec:
             requests:
                memory: 256Mi
           ports:
-        - name: ckan-app  
-            - containerPort: 5000
+            - name: ckan-app  
+              containerPort: 5000
           env:
           - name: CKAN_SITE_ID
             value: "default"
