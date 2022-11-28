@@ -19,9 +19,9 @@ spec:
             runAsUser: 8983
           resources:
              limits:
-               memory: 512Mi
+               memory: 400Mi
              requests:
-               memory: 300Mi
+               memory: 200Mi
           ports:
            - name: solr-app
              containerPort: 8983
@@ -53,9 +53,9 @@ spec:
         image: busybox:1.34
         resources:
              limits:
-               memory: 512Mi
+               memory: 100Mi
              requests:
-               memory: 256Mi
+               memory: 100Mi
         command: ["sh", "-c", "chown -R 8983:8983 /var/solr"]# 92 is the uid and gid of ckan user/group
         volumeMounts:
         - name: solr-pvc
