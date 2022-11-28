@@ -128,10 +128,7 @@ spec:
       # [END volumes]
       initContainers:
       - name: set-volume-ownership
-        image: busybox:latest
-        securityContext:
-          runAsNonRoot: true
-          runAsUser: 92
+        image: busybox:1.34
         resources:
           limits:
             memory: 512Mi

@@ -50,10 +50,7 @@ spec:
             name: schema-configmap
       initContainers:
       - name: set-volume-ownsership
-        image: busybox:latest
-        securityContext:
-          runAsNonRoot: true
-          runAsUser: 8983
+        image: busybox:1.34
         resources:
              limits:
                memory: 512Mi
