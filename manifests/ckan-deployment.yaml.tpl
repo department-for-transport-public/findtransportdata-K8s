@@ -26,11 +26,11 @@ spec:
           securityContext:
             runAsNonRoot: true
             runAsUser: 92
-          resources:
-            limits:
-               memory: 512Mi
-            requests:
-               memory: 256Mi
+#          resources:
+#            limits:
+#               memory: 512Mi
+#            requests:
+#               memory: 256Mi
           ports:
             - name: ckan-app  
               containerPort: 5000
