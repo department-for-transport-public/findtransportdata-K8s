@@ -26,11 +26,11 @@ spec:
           securityContext:
             runAsNonRoot: true
             runAsUser: 92
-#          resources:
-#            limits:
-#               memory: 512Mi
-#            requests:
-#               memory: 256Mi
+          resources:
+            limits:
+               memory: 512Mi
+            requests:
+               memory: 256Mi
           ports:
             - name: ckan-app  
               containerPort: 5000
@@ -92,9 +92,9 @@ spec:
           image: gcr.io/cloudsql-docker/gce-proxy:1.17
           resources:
             limits:
-              memory: 512Mi
+              memory: 100Mi
             requests:
-              memory: 256Mi
+              memory: 100Mi
           command: ["/cloud_sql_proxy",
                     "-instances=$(INSTANCE_CONNECTION)=tcp:5432",
                     "-credential_file=/secrets/cloudsql/key.json"]
@@ -131,9 +131,9 @@ spec:
         image: busybox:1.34
         resources:
           limits:
-            memory: 512Mi
+            memory: 100Mi
           requests:
-            memory: 256Mi
+            memory: 100Mi
         command: ["sh", "-c", "chown -R 92:92 /var/lib/ckan"] # 92 is the uid and gid of ckan user/group
         volumeMounts:
         - name: ckan-data
