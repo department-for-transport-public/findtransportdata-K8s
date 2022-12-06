@@ -33,6 +33,21 @@ steps:
     dft-rsss-findtransptdata-prod) rm -f manifests/managed-cert.yaml ;;
     esac
 
+## This step only applies the managed cert for Facade in dev/test
+- name: 'gcr.io/cloud-builders/git'
+  id: Facade managed cert
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    case "$PROJECT_ID" in
+    dft-rsss-findtransptdata-dev) sed -i "s#_DOMAINNAME_FACADE#${_DOMAINNAME_FACADE}#g" manifests/facade-managed-cert.yaml ;;
+    dft-rsss-findtransptdata-test) sed -i "s#_DOMAINNAME_FACADE#${_DOMAINNAME_FACADE}#g" manifests/facade-managed-cert.yaml ;;
+    dft-rsss-findtransptdata-prod) rm -f manifests/facade-managed-cert.yaml ;;
+    esac
+
+
+
 - name: "gcr.io/cloud-builders/gke-deploy"
   args:
   - run

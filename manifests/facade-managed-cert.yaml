@@ -4,4 +4,4 @@ metadata:
   name: facade-managed-cert
 spec:
   domains:
-    - 66.232.149.34.bc.googleusercontent.com
+    - _DOMAINNAME_FACADE

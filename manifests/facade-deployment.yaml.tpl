@@ -37,8 +37,8 @@ spec:
              protocol: TCP
           env:
           - name: CKAN_API_URL
-            value: "http://ckan-service:5000"
+            value: _CKAN_API_URL
           - name: FACADE_SECRET_KEY
-            value: f1t2d3
+            value: _FACADE_SECRET_KEY
           - name: CKAN_API_KEY
-            value: "fca8ad9e-2d65-4f54-964a-c49f008fa15b"
+            value: _CKAN_API_KEY
