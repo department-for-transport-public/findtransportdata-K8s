@@ -1,0 +1,7 @@
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: facade-managed-cert
+spec:
+  domains:
+    - 66.232.149.34.bc.googleusercontent.com
