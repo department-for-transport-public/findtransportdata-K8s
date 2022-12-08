@@ -47,7 +47,6 @@ steps:
   args:
   - run
   - --filename=manifests/
-  - --filename=manifests/facade/
   - --location=europe-west1
   - --namespace=${_NAMESPACE}
   - --cluster=${PROJECT_ID}-cluster
