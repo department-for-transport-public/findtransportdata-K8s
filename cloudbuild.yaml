@@ -40,18 +40,14 @@ steps:
   args:
   - '-c'
   - |
-    case "$PROJECT_ID" in
-    dft-rsss-findtransptdata-dev) sed -i "s#_DOMAINNAME_FACADE#${_DOMAINNAME_FACADE}#g" manifests/facade-managed-cert.yaml ;;
-    dft-rsss-findtransptdata-test) sed -i "s#_DOMAINNAME_FACADE#${_DOMAINNAME_FACADE}#g" manifests/facade-managed-cert.yaml ;;
-    dft-rsss-findtransptdata-prod) rm -f manifests/facade-managed-cert.yaml ;;
-    esac
-
+    sed -i "s#_DOMAINNAMEF#${_DOMAINNAME_FACADE}#g" manifests/facade-managed-cert.yaml
 
 
 - name: "gcr.io/cloud-builders/gke-deploy"
   args:
   - run
   - --filename=manifests/
+  - --filename=manifests/facade/
   - --location=europe-west1
   - --namespace=${_NAMESPACE}
   - --cluster=${PROJECT_ID}-cluster
