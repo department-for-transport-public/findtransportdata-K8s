@@ -1,0 +1,54 @@
+steps:
+
+#- name: 'gcr.io/cloud-builders/git'
+#  id: Replace ckan vars
+#  volumes:
+#  entrypoint: 'bash'
+#  args:
+#  - '-c'
+#  - |
+#    sed -i "s#_CKAN_SITE_URL#${_CKAN_SITE_URL}#g" manifests/ckan-deployment.yaml
+#    sed -i "s#_CKAN_SYSADMIN_NAME#${_CKAN_SYSADMIN_NAME}#g" manifests/ckan-deployment.yaml
+#    sed -i "s#_CKAN_SYSADMIN_PASSWORD#${_CKAN_SYSADMIN_PASSWORD}#g" manifests/ckan-deployment.yaml
+#    sed -i "s#_CKAN_SYSADMIN_EMAIL#${_CKAN_SYSADMIN_EMAIL}#g" manifests/ckan-deployment.yaml
+#    sed -i "s#_CKAN_SQLALCHEMY_URL#${_CKAN_SQLALCHEMY_URL}#g" manifests/ckan-deployment.yaml
+#    sed -i "s#_CKAN_DATASTORE_WRITE_URL#${_CKAN_DATASTORE_WRITE_URL}#g" manifests/ckan-deployment.yaml
+#    sed -i "s#_CKAN_DATASTORE_READ_URL#${_CKAN_DATASTORE_READ_URL}#g" manifests/ckan-deployment.yaml
+#    sed -i "s#_CKAN_REDIS_URL#${_CKAN_REDIS_URL}#g" manifests/ckan-deployment.yaml
+#    sed -i "s#_GTM_ID#${_GTM_ID}#g" manifests/ckan-deployment.yaml
+#    sed -i "s#_WORKLOAD_SVC_ACCT#${_WORKLOAD_SVC_ACCT}#g" manifests/ckanserviceaccount.yaml
+#    sed -i "s#_CONNECTIONNAME#${_CONNECTIONNAME}#g" manifests/connectionname_configmap.yaml
+#    sed -i "s#_CLOUDSQL_RESOURCE_NAME#${_CLOUDSQL_RESOURCE_NAME}#g" manifests/cloudsql-secrets.yaml
+
+## This step only applies the managed cert in dev/test
+#- name: 'gcr.io/cloud-builders/git'
+#  id: Managed cert
+#  entrypoint: 'bash'
+#  args:
+#  - '-c'
+#  - |
+#    case "$PROJECT_ID" in
+#    dft-rsss-findtransptdata-dev) sed -i "s#_DOMAINNAME#${_DOMAINNAME}#g" manifests/managed-cert.yaml ;;
+#    dft-rsss-findtransptdata-test) sed -i "s#_DOMAINNAME#${_DOMAINNAME}#g" manifests/managed-cert.yaml ;;
+#    dft-rsss-findtransptdata-prod) rm -f manifests/managed-cert.yaml ;;
+#    esac
+
+# This step only applies the managed cert for Facade in dev/test
+- name: 'gcr.io/cloud-builders/git'
+  id: Facade managed cert
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    sed -i "s#_DOMAINNAMEF#${_DOMAINNAME_FACADE}#g" manifests/facade-managed-cert.yaml
+
+
+- name: "gcr.io/cloud-builders/gke-deploy"
+  args:
+  - run
+  - --filename=manifests/facade/
+  - --location=europe-west1
+  - --namespace=${_NAMESPACE}
+  - --cluster=${PROJECT_ID}-cluster
+  timeout: 600s
+
