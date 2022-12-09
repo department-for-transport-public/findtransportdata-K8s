@@ -40,7 +40,7 @@ steps:
   args:
   - '-c'
   - |
-    sed -i "s#_DOMAINNAMEF#${_DOMAINNAME_FACADE}#g" manifests/facade-managed-cert.yaml
+    sed -i "s#_DOMAINNAMEF#${_DOMAINNAME_FACADE}#g" manifests/facade/facade-managed-cert.yaml
 
 
 - name: "gcr.io/cloud-builders/gke-deploy"
