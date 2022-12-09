@@ -1,12 +1,16 @@
 steps:
 
-#- name: 'gcr.io/cloud-builders/git'
-#  id: Replace ckan vars
-#  volumes:
-#  entrypoint: 'bash'
-#  args:
-#  - '-c'
-#  - |
+- name: 'gcr.io/cloud-builders/git'
+  id: Replace facade vars
+  volumes:
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    sed -i "s#_CKAN_API_URL#${_CKAN_API_URL}#g" manifests/facade/facade-deployment.yaml
+    sed -i "s#_FACADE_SECRET_KEY#${_FACADE_SECRET_KEY)}#g" manifests/facade/facade-deployment.yaml
+    sed -i "s#_CKAN_API_KEY#${_CKAN_API_KEY}#g" manifests/facade/facade-deployment.yaml
+
 #    sed -i "s#_CKAN_SITE_URL#${_CKAN_SITE_URL}#g" manifests/ckan-deployment.yaml
 #    sed -i "s#_CKAN_SYSADMIN_NAME#${_CKAN_SYSADMIN_NAME}#g" manifests/ckan-deployment.yaml
 #    sed -i "s#_CKAN_SYSADMIN_PASSWORD#${_CKAN_SYSADMIN_PASSWORD}#g" manifests/ckan-deployment.yaml
