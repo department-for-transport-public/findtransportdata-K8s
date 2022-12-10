@@ -22,7 +22,7 @@ spec:
   #    serviceAccountName: ckan-serviceaccount
       containers:
         - name: facade
-          image: europe-docker.pkg.dev/dft-rsss-findtransptdata-dev/dft-nap/facade:$SHORT_SHA
+          image: europe-docker.pkg.dev/dft-rsss-findtransptdata-dev/dft-nap/facade:COMMIT_SHA
 #          securityContext:
 #            runAsNonRoot: true
 #            runAsUser: 92  
