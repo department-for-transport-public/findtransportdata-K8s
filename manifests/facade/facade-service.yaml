@@ -3,11 +3,16 @@ kind: Service
 metadata:
   name: facade-service
   labels:
-    run: facade
+    app: facade
+  annotations:
+    beta.cloud.google.com/backend-config: '{"default": "config-default"}'
 spec:
   type: ClusterIP
+  clusterIP: None
   ports:
-  - port: 3000
-    targetPort: 3000
+  - name: facade-port
+    port: 3000
+    targetPort: facade-app
+    protocol: TCP
   selector:
-    run: facade
+    app: facade
