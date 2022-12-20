@@ -8,7 +8,7 @@ steps:
   - '-c'
   - |
     sed -i "s#_CKAN_API_URL#${_CKAN_API_URL}#g" manifests/facade/facade-deployment.yaml
-    sed -i "s#_FACADE_SECRET_KEY#${_FACADE_SECRET_KEY)}#g" manifests/facade/facade-deployment.yaml
+    sed -i "s#_FACADE_SECRET_KEY#${_FACADE_SECRET_KEY}#g" manifests/facade/facade-deployment.yaml
     sed -i "s#_CKAN_API_KEY#${_CKAN_API_KEY}#g" manifests/facade/facade-deployment.yaml
 
 #    sed -i "s#_CKAN_SITE_URL#${_CKAN_SITE_URL}#g" manifests/ckan-deployment.yaml
