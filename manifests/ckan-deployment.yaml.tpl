@@ -34,6 +34,21 @@ spec:
           ports:
             - name: ckan-app  
               containerPort: 5000
+          readinessProbe:
+            tcpSocket:
+              port: ckan-app
+            initialDelaySeconds: 15
+            periodSeconds: 15
+          livenessProbe:
+            httpGet:
+              path: /api/3/action/status_show
+              port: ckan-app
+              httpHeaders:
+              - name: Accept
+                value: "*/*"
+            initialDelaySeconds: 15
+            periodSeconds: 25
+            timeoutSeconds: 10
           env:
           - name: CKAN_SITE_ID
             value: "default"
