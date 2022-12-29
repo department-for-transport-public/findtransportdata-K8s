@@ -35,6 +35,21 @@ spec:
            - name: facade-app
              containerPort: 3000
              protocol: TCP
+          readinessProbe:
+            tcpSocket:
+              port: facade-app
+            initialDelaySeconds: 15
+            periodSeconds: 15
+          livenessProbe:
+            httpGet:
+              path: /api/3/action/status_show
+              port: facade-app
+              httpHeaders:
+              - name: Accept
+                value: "*/*"
+            initialDelaySeconds: 15
+            periodSeconds: 25
+
           env:
           - name: CKAN_API_URL
             value: _CKAN_API_URL
