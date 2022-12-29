@@ -7,16 +7,16 @@ steps:
   args:
   - '-c'
   - |
-    sed -i "s#_CKAN_API_URL#${_CKAN_API_URL}#g" manifests/facade-deployment.yaml
-    sed -i "s#_FACADE_SECRET_KEY#${_FACADE_SECRET_KEY}#g" manifests/facade-deployment.yaml
-    sed -i "s#_CKAN_API_KEY#${_CKAN_API_KEY}#g" manifests/facade-deployment.yaml
+    sed -i "s#_CKAN_API_URL#${_CKAN_API_URL}#g" manifests/facade/facade-deployment.yaml
+    sed -i "s#_FACADE_SECRET_KEY#${_FACADE_SECRET_KEY}#g" manifests/facade/facade-deployment.yaml
+    sed -i "s#_CKAN_API_KEY#${_CKAN_API_KEY}#g" manifests/facade/facade-deployment.yaml
 
 
 
 - name: "gcr.io/cloud-builders/gke-deploy"
   args:
   - run
-  - --filename=manifests/facade-deployment.yaml
+  - --filename=manifests/facade/facade-deployment.yaml
   - --location=europe-west1
   - --namespace=${_NAMESPACE}
   - --cluster=${PROJECT_ID}-cluster
