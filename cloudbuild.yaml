@@ -3,10 +3,14 @@ steps:
 - name: 'gcr.io/cloud-builders/git'
   id: Replace ckan vars
   volumes:
+  - name: 'manifestsvolume'
+    path: '/deploy'
+  secretEnv: ['CLIENT_ID', 'CLIENT_SECRET']
   entrypoint: 'bash'
   args:
   - '-c'
   - |
+    sed  "s/COMMIT_SHA/${SHORT_SHA}/g" manifests/ckan-deployment.yaml.tpl  > manifests/ckan-deployment.yaml
     sed -i "s#_CKAN_SITE_URL#${_CKAN_SITE_URL}#g" manifests/ckan-deployment.yaml
     sed -i "s#_CKAN_SYSADMIN_NAME#${_CKAN_SYSADMIN_NAME}#g" manifests/ckan-deployment.yaml
     sed -i "s#_CKAN_SYSADMIN_PASSWORD#${_CKAN_SYSADMIN_PASSWORD}#g" manifests/ckan-deployment.yaml
@@ -19,6 +23,8 @@ steps:
     sed -i "s#_WORKLOAD_SVC_ACCT#${_WORKLOAD_SVC_ACCT}#g" manifests/ckanserviceaccount.yaml
     sed -i "s#_CONNECTIONNAME#${_CONNECTIONNAME}#g" manifests/connectionname_configmap.yaml
     sed -i "s#_CLOUDSQL_RESOURCE_NAME#${_CLOUDSQL_RESOURCE_NAME}#g" manifests/cloudsql-secrets.yaml
+    sed -i "s#CLIENT_ID#$${CLIENT_ID}#g" manifests/oa-secret.yaml
+    sed -i "s#CLIENT_SECRET#$${CLIENT_SECRET}#g" manifests/oa-secret.yaml
 
 ## This step only applies the managed cert in dev/test
 - name: 'gcr.io/cloud-builders/git'
