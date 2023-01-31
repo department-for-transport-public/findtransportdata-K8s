@@ -1,0 +1,11 @@
+steps:
+
+- name: "gcr.io/cloud-builders/gke-deploy"
+  args:
+  - run
+  - --filename=manifests/
+  - --location=europe-west1
+  - --namespace=${_NAMESPACE}
+  - --cluster=${PROJECT_ID}-cluster
+  timeout: 600s
+

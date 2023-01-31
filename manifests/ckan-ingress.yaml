@@ -3,8 +3,8 @@ kind: Ingress
 metadata:
   name: ckan-ingress
   annotations:
-    kubernetes.io/ingress.global-static-ip-name: "k8s-static-ip"
-    networking.gke.io/managed-certificates: managed-cert
+    kubernetes.io/ingress.global-static-ip-name: "k8-ckan-ip"
+    networking.gke.io/managed-certificates: ckan-managed-cert
     kubernetes.io/ingress.class: "gce"
     networking.gke.io/v1beta1.FrontendConfig: ssl-redirect
 spec:
@@ -15,6 +15,6 @@ spec:
         pathType: ImplementationSpecific
         backend:
           service:
-            name: facade-service
+            name: ckan-service
             port:
-              number: 3000
+              number: 5000
