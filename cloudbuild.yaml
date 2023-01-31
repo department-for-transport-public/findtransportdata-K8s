@@ -2,15 +2,11 @@ steps:
 
 - name: 'gcr.io/cloud-builders/git'
   id: Replace ckan vars
-  volumes:
-  - name: 'manifestsvolume'
-    path: '/deploy'
   secretEnv: ['CLIENT_ID', 'CLIENT_SECRET']
   entrypoint: 'bash'
   args:
   - '-c'
   - |
-    #sed  "s/COMMIT_SHA/${SHORT_SHA}/g" manifests/ckan-deployment.yaml.tpl  > manifests/ckan-deployment.yaml
     sed -i "s#_CKAN_SITE_URL#${_CKAN_SITE_URL}#g" manifests/ckan-deployment.yaml
     sed -i "s#_CKAN_SYSADMIN_NAME#${_CKAN_SYSADMIN_NAME}#g" manifests/ckan-deployment.yaml
     sed -i "s#_CKAN_SYSADMIN_PASSWORD#${_CKAN_SYSADMIN_PASSWORD}#g" manifests/ckan-deployment.yaml
@@ -26,19 +22,6 @@ steps:
     sed -i "s#CLIENT_ID#$${CLIENT_ID}#g" manifests/oa-secret.yaml
     sed -i "s#CLIENT_SECRET#$${CLIENT_SECRET}#g" manifests/oa-secret.yaml
 
-## This step only applies the managed cert in dev/test
-- name: 'gcr.io/cloud-builders/git'
-  id: Managed cert
-  entrypoint: 'bash'
-  args:
-  - '-c'
-  - |
-    case "$PROJECT_ID" in
-    dft-rsss-findtransptdata-dev) sed -i "s#_DOMAINNAME#${_DOMAINNAME}#g" manifests/managed-cert.yaml ;;
-    dft-rsss-findtransptdata-test) sed -i "s#_DOMAINNAME#${_DOMAINNAME}#g" manifests/managed-cert.yaml ;;
-    dft-rsss-findtransptdata-prod) rm -f manifests/managed-cert.yaml ;;
-    esac
-
 
 - name: "gcr.io/cloud-builders/gke-deploy"
   args:
@@ -48,4 +31,11 @@ steps:
   - --namespace=${_NAMESPACE}
   - --cluster=${PROJECT_ID}-cluster
   timeout: 600s
+  
+availableSecrets:
+  secretManager:
+  - versionName: projects/$PROJECT_ID/secrets/client_id/versions/latest
+    env: 'CLIENT_ID'
+  - versionName: projects/$PROJECT_ID/secrets/client_secret/versions/latest
+    env: 'CLIENT_SECRET'
 
