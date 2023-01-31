@@ -22,7 +22,7 @@ spec:
       serviceAccountName: ckanserviceaccount
       containers:
         - name: ckan
-          image: europe-docker.pkg.dev/dft-rsss-findtransptdata-dev/dft-nap/ckan_295:3a0ab81
+          image: europe-docker.pkg.dev/dft-rsss-findtransptdata-dev/dft-nap/ckan_295:155cdd1
           securityContext:
             runAsNonRoot: true
             runAsUser: 92
@@ -32,8 +32,23 @@ spec:
             requests:
                memory: 256Mi
           ports:
-        - name: ckan-app
-             - containerPort: 5000
+            - name: ckan-app  
+              containerPort: 5000
+          readinessProbe:
+            tcpSocket:
+              port: ckan-app
+            initialDelaySeconds: 15
+            periodSeconds: 15
+          livenessProbe:
+            httpGet:
+              path: /api/3/action/status_show
+              port: ckan-app
+              httpHeaders:
+              - name: Accept
+                value: "*/*"
+            initialDelaySeconds: 15
+            periodSeconds: 25
+            timeoutSeconds: 10
           env:
           - name: CKAN_SITE_ID
             value: "default"
@@ -92,9 +107,9 @@ spec:
           image: gcr.io/cloudsql-docker/gce-proxy:1.17
           resources:
             limits:
-              memory: 256Mi
+              memory: 100Mi
             requests:
-              memory: 256Mi
+              memory: 100Mi
           command: ["/cloud_sql_proxy",
                     "-instances=$(INSTANCE_CONNECTION)=tcp:5432",
                     "-credential_file=/secrets/cloudsql/key.json"]
@@ -127,16 +142,13 @@ spec:
               secretProviderClass: "cloudsql-secrets"
       # [END volumes]
       initContainers:
-      - name: set-volume-ownsership
-        image: busybox:latest
-        securityContext:
-          runAsNonRoot: true
-          runAsUser: 92
+      - name: set-volume-ownership
+        image: busybox:1.34
         resources:
           limits:
-            memory: 512Mi
+            memory: 100Mi
           requests:
-            memory: 256Mi
+            memory: 100Mi
         command: ["sh", "-c", "chown -R 92:92 /var/lib/ckan"] # 92 is the uid and gid of ckan user/group
         volumeMounts:
         - name: ckan-data
