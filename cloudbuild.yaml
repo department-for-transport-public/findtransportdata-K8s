@@ -21,6 +21,7 @@ steps:
     sed -i "s#_CLOUDSQL_RESOURCE_NAME#${_CLOUDSQL_RESOURCE_NAME}#g" manifests/cloudsql-secrets.yaml
     sed -i "s#CLIENT_ID#$${CLIENT_ID}#g" manifests/oa-secret.yaml
     sed -i "s#CLIENT_SECRET#$${CLIENT_SECRET}#g" manifests/oa-secret.yaml
+    sed -i "s#_DOMAINNAME#${_DOMAINNAME}#g" manifests/managed-cert.yaml
 
 
 - name: "gcr.io/cloud-builders/gke-deploy"
