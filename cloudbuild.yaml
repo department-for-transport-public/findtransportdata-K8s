@@ -31,4 +31,11 @@ steps:
   - --namespace=${_NAMESPACE}
   - --cluster=${PROJECT_ID}-cluster
   timeout: 600s
+  
+availableSecrets:
+  secretManager:
+  - versionName: projects/$PROJECT_ID/secrets/client_id/versions/latest
+    env: 'CLIENT_ID'
+  - versionName: projects/$PROJECT_ID/secrets/client_secret/versions/latest
+    env: 'CLIENT_SECRET'
 
