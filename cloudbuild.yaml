@@ -25,25 +25,37 @@ steps:
     sed -i "s#_CLOUDSQL_RESOURCE_NAME#${_CLOUDSQL_RESOURCE_NAME}#g" manifests/cloudsql-secrets.yaml
     sed -i "s#CLIENT_ID#$${CLIENT_ID}#g" manifests/oa-secret.yaml
     sed -i "s#CLIENT_SECRET#$${CLIENT_SECRET}#g" manifests/oa-secret.yaml
+    cp manifests/oa-secret.yaml /deploy/oa-secret.yaml
+    cp manifests/ckan-deployment.yaml /deploy/ckan-deployment.yaml
+    cp manifests/ckanserviceaccount.yaml /deploy/ckanserviceaccount.yaml
+    cp manifests/connectionname_configmap.yaml /deploy/connectionname_configmap.yaml
+    cp manifests/cloudsql-secrets.yaml /deploy/cloudsql-secrets.yaml
+    cp manifests/ckan-ingress.yaml /deploy/ckan-ingress.yaml
+    cp manifests/ckan-pvc.yaml /deploy/ckan-pvc.yaml
+    cp manifests/ckan-service.yaml /deploy/ckan-service.yaml
+    cp manifests/iap-backend.yaml /deploy/iap-backend.yaml
 
 ## This step only applies the managed cert in dev/test
-- name: 'gcr.io/cloud-builders/git'
-  id: Managed cert
-  entrypoint: 'bash'
-  args:
-  - '-c'
-  - |
-    case "$PROJECT_ID" in
-    dft-rsss-findtransptdata-dev) sed -i "s#_DOMAINNAME#${_DOMAINNAME}#g" manifests/managed-cert.yaml ;;
-    dft-rsss-findtransptdata-test) sed -i "s#_DOMAINNAME#${_DOMAINNAME}#g" manifests/managed-cert.yaml ;;
-    dft-rsss-findtransptdata-prod) rm -f manifests/managed-cert.yaml ;;
-    esac
+#- name: 'gcr.io/cloud-builders/git'
+#  id: Managed cert
+#  entrypoint: 'bash'
+#  args:
+#  - '-c'
+#  - |
+#    case "$PROJECT_ID" in
+#    dft-rsss-findtransptdata-dev) sed -i "s#_DOMAINNAME#${_DOMAINNAME}#g" manifests/managed-cert.yaml ;;
+#    dft-rsss-findtransptdata-test) sed -i "s#_DOMAINNAME#${_DOMAINNAME}#g" manifests/managed-cert.yaml ;;
+#    dft-rsss-findtransptdata-prod) rm -f manifests/managed-cert.yaml ;;
+#    esac
 
 
 - name: "gcr.io/cloud-builders/gke-deploy"
+  volumes:
+    - name: 'manifestsvolume'
+      path: '/deploy
   args:
   - run
-  - --filename=manifests/
+  - --filename=/deploy/
   - --location=europe-west1
   - --namespace=${_NAMESPACE}
   - --cluster=${PROJECT_ID}-cluster

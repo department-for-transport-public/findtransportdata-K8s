@@ -1,9 +1,30 @@
 steps:
 
+- name: 'gcr.io/cloud-builders/git'
+  id: Prepare infrastructure environment manifests
+  volumes:
+  - name: 'manifestsvolume'
+    path: '/deploy'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+   cp manifests/datapusher-deployment.yaml /deploy/datapusher-deployment.yaml
+   cp manifests/datapusher-headless.yaml /deploy/datapusher-headless.yaml
+   cp manifests/solr-deployment.yaml /deploy/solr-deployment.yaml
+   cp manifests/solr-headless.yaml /deploy/solr-headless.yaml
+   cp manifests/solr-init-configmap.yaml /deploy/solr-init-configmap.yaml
+   cp manifests/solr-pvc.yaml /deploy/solr-pvc.yaml
+   cp manifests/solr-schema-configmap.yaml /deploy/solr-schema-configmap.yaml
+ 
+
 - name: "gcr.io/cloud-builders/gke-deploy"
+  volumes:
+    - name: 'manifestsvolume'
+      path: '/deploy'
   args:
   - run
-  - --filename=manifests/
+  - --filename=/deploy/
   - --location=europe-west1
   - --namespace=${_NAMESPACE}
   - --cluster=${PROJECT_ID}-cluster
