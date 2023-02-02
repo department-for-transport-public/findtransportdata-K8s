@@ -2,8 +2,8 @@ steps:
 
 - name: 'gcr.io/cloud-builders/git'
   volumes:
-    - name: 'manifestsvolume'
-      path: '/deploy
+  - name: 'manifestsvolume'
+    path: '/deploy
   id: Replace ckan vars
   secretEnv: ['CLIENT_ID', 'CLIENT_SECRET']
   entrypoint: 'bash'
@@ -38,8 +38,8 @@ steps:
 
 - name: "gcr.io/cloud-builders/gke-deploy"
   volumes:
-    - name: 'manifestsvolume'
-      path: '/deploy
+  - name: 'manifestsvolume'
+    path: '/deploy
   args:
   - run
   - --filename=/deploy/
