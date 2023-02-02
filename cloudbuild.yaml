@@ -1,6 +1,9 @@
 steps:
 
 - name: 'gcr.io/cloud-builders/git'
+  volumes:
+    - name: 'manifestsvolume'
+      path: '/deploy
   id: Replace ckan vars
   secretEnv: ['CLIENT_ID', 'CLIENT_SECRET']
   entrypoint: 'bash'
@@ -22,12 +25,24 @@ steps:
     sed -i "s#CLIENT_ID#$${CLIENT_ID}#g" manifests/oa-secret.yaml
     sed -i "s#CLIENT_SECRET#$${CLIENT_SECRET}#g" manifests/oa-secret.yaml
     sed -i "s#_DOMAINNAME#${_DOMAINNAME}#g" manifests/managed-cert.yaml
-
+    cp manifests/oa-secret.yaml /deploy/oa-secret.yaml
+    cp manifests/ckan-deployment.yaml /deploy/ckan-deployment.yaml
+    cp manifests/ckanserviceaccount.yaml /deploy/ckanserviceaccount.yaml
+    cp manifests/connectionname_configmap.yaml /deploy/connectionname_configmap.yaml
+    cp manifests/cloudsql-secrets.yaml /deploy/cloudsql-secrets.yaml
+    cp manifests/ckan-ingress.yaml /deploy/ckan-ingress.yaml
+    cp manifests/ckan-pvc.yaml /deploy/ckan-pvc.yaml
+    cp manifests/ckan-service.yaml /deploy/ckan-service.yaml
+    cp manifests/managed-cert.yaml /deploy/managed-cert.yaml
+    
 
 - name: "gcr.io/cloud-builders/gke-deploy"
+  volumes:
+    - name: 'manifestsvolume'
+      path: '/deploy
   args:
   - run
-  - --filename=manifests/
+  - --filename=/deploy/
   - --location=europe-west1
   - --namespace=${_NAMESPACE}
   - --cluster=${PROJECT_ID}-cluster

@@ -22,7 +22,7 @@ spec:
       serviceAccountName: ckanserviceaccount
       containers:
         - name: ckan
-          image: europe-docker.pkg.dev/dft-rsss-findtransptdata-dev/dft-nap/ckan_295:3a0ab81
+          image: europe-docker.pkg.dev/dft-rsss-findtransptdata-dev/dft-nap/ckan_297:1
           securityContext:
             runAsNonRoot: true
             runAsUser: 92
