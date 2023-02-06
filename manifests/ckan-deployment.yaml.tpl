@@ -22,7 +22,7 @@ spec:
       serviceAccountName: ckanserviceaccount
       containers:
         - name: ckan
-          image: europe-docker.pkg.dev/dft-rsss-findtransptdata-dev/dft-nap/ckan_297:COMMIT_SHA
+          image: europe-docker.pkg.dev/dft-rsss-findtransptdata-dev/dft-nap/ckan_295:COMMIT_SHA
           securityContext:
             runAsNonRoot: true
             runAsUser: 92
