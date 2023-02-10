@@ -49,6 +49,7 @@ steps:
     cp manifests/ckan-pvc.yaml /deploy/ckan-pvc.yaml
     cp manifests/ckan-service.yaml /deploy/ckan-service.yaml
     cp manifests/managed-cert.yaml /deploy/managed-cert.yaml
+    cp manifests/ckan-ingress.yaml /deploy/ckan-ingress.yaml
     
 
 - name: "gcr.io/cloud-builders/gke-deploy"
