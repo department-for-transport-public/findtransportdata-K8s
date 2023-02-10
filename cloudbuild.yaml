@@ -11,7 +11,7 @@ steps:
   - |
     if [ $PROJECT_ID == "dft-rsss-findtransptdata-dev" ]; then
     echo "Update ingress static ip"
-    sed -i "s#k8s-static-ip#k8s-ckan-ip#g" manifests/ckan-ingress.yaml
+    sed -i "s#k8s-static-ip#k8-ckan-ip#g" manifests/ckan-ingress.yaml
     cp manifests/ckan-ingress.yaml /deploy/ckan-ingress.yaml
     fi
 
