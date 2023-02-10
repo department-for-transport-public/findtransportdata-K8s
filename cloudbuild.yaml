@@ -4,6 +4,22 @@ steps:
   volumes:
   - name: 'manifestsvolume'
     path: '/deploy'
+  id: Replace static ip in dev
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    if [ $PROJECT_ID == "dft-rsss-findtransptdata-dev" ]; then
+    echo "Update ingress static ip"
+    sed -i "s#k8s-static-ip#k8s-ckan-ip#g" manifests/ckan-ingress.yaml
+    cp manifests/ckan-ingress.yaml /deploy/ckan-ingress.yaml
+    fi
+
+
+- name: 'gcr.io/cloud-builders/git'
+  volumes:
+  - name: 'manifestsvolume'
+    path: '/deploy'
   id: Replace ckan vars
   secretEnv: ['CLIENT_ID', 'CLIENT_SECRET']
   entrypoint: 'bash'
@@ -30,7 +46,6 @@ steps:
     cp manifests/ckanserviceaccount.yaml /deploy/ckanserviceaccount.yaml
     cp manifests/connectionname_configmap.yaml /deploy/connectionname_configmap.yaml
     cp manifests/cloudsql-secrets.yaml /deploy/cloudsql-secrets.yaml
-    cp manifests/ckan-ingress.yaml /deploy/ckan-ingress.yaml
     cp manifests/ckan-pvc.yaml /deploy/ckan-pvc.yaml
     cp manifests/ckan-service.yaml /deploy/ckan-service.yaml
     cp manifests/managed-cert.yaml /deploy/managed-cert.yaml
