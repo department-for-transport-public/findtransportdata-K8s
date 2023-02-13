@@ -19,7 +19,7 @@ spec:
             runAsUser: 8983
           resources:
              limits:
-               memory: 400Mi
+               memory: 550Mi
              requests:
                memory: 200Mi
           ports:
