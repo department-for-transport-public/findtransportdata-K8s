@@ -9,8 +9,6 @@ steps:
   args:
   - '-c'
   - |
-   cp manifests/datapusher-deployment.yaml /deploy/datapusher-deployment.yaml
-   cp manifests/datapusher-headless.yaml /deploy/datapusher-headless.yaml
    cp manifests/solr-deployment.yaml /deploy/solr-deployment.yaml
    cp manifests/solr-headless.yaml /deploy/solr-headless.yaml
    cp manifests/solr-init-configmap.yaml /deploy/solr-init-configmap.yaml
