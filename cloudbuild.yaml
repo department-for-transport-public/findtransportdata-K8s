@@ -15,6 +15,20 @@ steps:
     cp manifests/ckan-ingress.yaml /deploy/ckan-ingress.yaml
     fi
 
+- name: 'gcr.io/cloud-builders/git'
+  volumes:
+  - name: 'manifestsvolume'
+    path: '/deploy'
+  id: Replace static ip in prod 
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    if [ $PROJECT_ID == "dft-rsss-findtransptdata-prod" ]; then
+    echo "Update ingress static ip"
+    sed -i "s#k8-ckan-ip#k8s-static-ip#g" manifests/ckan-ingress.yaml
+    cp manifests/ckan-ingress.yaml /deploy/ckan-ingress.yaml
+    fi
 
 - name: 'gcr.io/cloud-builders/git'
   volumes:
