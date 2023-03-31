@@ -9,7 +9,7 @@ steps:
   args:
   - '-c'
   - |
-    if [[ $PROJECT_ID -eq "dft-rsss-findtransptdata-dev"]] || [[ $PROJECT_ID -eq "dft-rsss-findtransptdata-test"]]; 
+    if [[ $PROJECT_ID -eq "dft-rsss-findtransptdata-dev"]] || [[ $PROJECT_ID -eq "dft-rsss-findtransptdata-test"]] 
     then
     echo "Update ingress static ip"
     sed -i "s#k8s-static-ip#k8-ckan-ip#g" manifests/ckan-ingress.yaml
