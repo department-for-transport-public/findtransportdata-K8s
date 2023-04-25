@@ -25,6 +25,7 @@ steps:
     sed "s/domain.name/${_DOMAIN_NAME}/g" facade/certificate.yaml > /data/certificate.yaml
     sed -i "s#_CONNECTIONNAME#${_CONNECTIONNAME}#g" facade/connectionname_configmap.yaml
     sed -i "s#_WORKLOAD_SVC_ACCT#${_WORKLOAD_SVC_ACCT}#g" facade/ckanserviceaccount.yaml
+    cp facade/connectionname_configmap.yaml /data/connectionname_configmap.yaml
     cp facade/ingress.yaml /data/ingress.yaml
     cp facade/service.yaml /data/service.yaml
     cp facade/cloudsql-secrets.yaml /data/cloudsql-secrets.yaml
