@@ -32,6 +32,7 @@ steps:
     cp facade/ckanserviceaccount.yaml /data/ckanserviceaccount.yaml
     cp facade/facade-pvc.yaml /data/facade-pvc.yaml
     cat /data/deployment.yaml   
+    cat /data/cloudsql-secrets.yaml
     
 - name: "gcr.io/cloud-builders/gke-deploy"
   volumes:
