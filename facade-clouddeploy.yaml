@@ -1,0 +1,46 @@
+steps:
+
+- name: 'gcr.io/cloud-builders/git'
+  id: Replace environment variabels
+  volumes:
+  - name: 'manifestsvolume'
+    path: '/data'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    sed "s/£CKAN_API_KEY/${_CKAN_API_KEY}/g" facade/deployment.yaml > /data/deployment.yaml
+    sed -i "s#£API_URL#${_CKAN_API_URL}#g" /data/deployment.yaml
+    sed -i "s/£FACADE_SECRET_KEY/${_FACADE_SECRET_KEY}/g" /data/deployment.yaml
+    sed -i "s/£GOV_NOTIFY_PUBLISHER_REQUEST_TEMPLATE_ID/${_GOV_NOTIFY_PUBLISHER_REQUEST_TEMPLATE_ID}/g" /data/deployment.yaml
+    sed -i "s/£GOV_NOTIFY_PUBLISHER_REQUEST_EMAIL_TO/${_GOV_NOTIFY_PUBLISHER_REQUEST_EMAIL_TO}/g" /data/deployment.yaml
+    sed -i "s/£GOV_NOTIFY_KEY/${_GOV_NOTIFY_KEY}/g" /data/deployment.yaml
+    sed -i "s/£GOV_NOTIFY_CONTACT_PAGE_TEMPLATE_ID/${_GOV_NOTIFY_CONTACT_PAGE_TEMPLATE_ID}/g" /data/deployment.yaml
+    sed -i "s/£GOV_NOTIFY_CONTACT_INFO_EMAIL_TO/${_GOV_NOTIFY_CONTACT_INFO_EMAIL_TO}/g" /data/deployment.yaml
+    sed -i "s#£FACADE_SEQUELIZE_URL#${_FACADE_SEQUELIZE_URL}#g" /data/deployment.yaml
+    sed -i "s/£REDIS_HOST/${_REDIS_HOST}/g" /data/deployment.yaml
+    sed -i "s/£REDIS_PORT/${_REDIS_PORT}/g" /data/deployment.yaml
+    sed -i "s/£GTM_ID/${_GTM_ID}/g" /data/deployment.yaml
+    sed -i "s/£DOMAIN_NAME/${_DOMAIN_NAME}/g" /data/deployment.yaml
+#    sed -i 's#\(dft-nap/facade:\).*$#dft-nap/facade:$SHORT_SHA#g' /data/deployment.yaml
+    sed "s/domain.name/${_DOMAIN_NAME}/g" facade/certificate.yaml > /data/certificate.yaml
+    cp facade/ingress.yaml /data/ingress.yaml
+    cp facade/service.yaml /data/service.yaml
+    cp facade/cloudsql-secrets.yaml /data/cloudsql-secrets.yaml
+    cp facade/ckanserviceaccount.yaml /data/ckanserviceaccount.yaml
+    cp facade/certificate.yaml /data/certificate.yaml
+    cp facade/connectionname_configmap.yaml /data/connectionname_configmap.yaml
+    cp facade/facade-pvc.yaml /data/facade-pvc.yaml
+    cat /data/deployment.yaml   
+    
+- name: "gcr.io/cloud-builders/gke-deploy"
+  volumes:
+    - name: 'manifestsvolume'
+      path: '/data'
+  args:
+  - run
+  - --filename=/data/
+  - --location=europe-west1
+  - --namespace=${_NAMESPACE}
+  - --cluster=${PROJECT_ID}-cluster
+  timeout: 600s
