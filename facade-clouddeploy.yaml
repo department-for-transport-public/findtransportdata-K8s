@@ -22,15 +22,19 @@ steps:
     sed -i "s/£REDIS_PORT/${_REDIS_PORT}/g" /data/deployment.yaml
     sed -i "s/£GTM_ID/${_GTM_ID}/g" /data/deployment.yaml
     sed -i "s/£DOMAIN_NAME/${_DOMAIN_NAME}/g" /data/deployment.yaml
-#    sed -i 's#\(dft-nap/facade:\).*$#dft-nap/facade:$SHORT_SHA#g' /data/deployment.yaml
     sed "s/domain.name/${_DOMAIN_NAME}/g" facade/certificate.yaml > /data/certificate.yaml
     sed -i "s#_CONNECTIONNAME#${_CONNECTIONNAME}#g" facade/connectionname_configmap.yaml
+    sed -i "s#_WORKLOAD_SVC_ACCT#${_WORKLOAD_SVC_ACCT}#g" facade/ckanserviceaccount.yaml
+    sed -i "s#_CLOUDSQL_RESOURCE_NAME#${_CLOUDSQL_RESOURCE_NAME}#g" facade/cloudsql-secrets.yaml
+    cp facade/connectionname_configmap.yaml /data/connectionname_configmap.yaml
     cp facade/ingress.yaml /data/ingress.yaml
     cp facade/service.yaml /data/service.yaml
     cp facade/cloudsql-secrets.yaml /data/cloudsql-secrets.yaml
     cp facade/ckanserviceaccount.yaml /data/ckanserviceaccount.yaml
     cp facade/facade-pvc.yaml /data/facade-pvc.yaml
+    cp facade/cloudsql-secrets.yaml /data/cloudsql-secrets.yaml
     cat /data/deployment.yaml   
+    cat /data/cloudsql-secrets.yaml
     
 - name: "gcr.io/cloud-builders/gke-deploy"
   volumes:
