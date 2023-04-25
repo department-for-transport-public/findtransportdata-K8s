@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: connectionname
 data:
-  connectionname: dft-rsss-db-appdata-nonprod:europe-west1:nonprod-postgres
+  connectionname: _CONNECTIONNAME
