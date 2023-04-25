@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: facade-service
+  labels:
+    run: facade
+  annotations:
+    beta.cloud.google.com/backend-config: '{"default": "config-default"}'
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+  - name: facade-port
+    port: 3000
+    targetPort: facade-app
+    protocol: TCP
+  selector:
+    app: facade
