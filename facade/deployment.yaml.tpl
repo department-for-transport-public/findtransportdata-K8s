@@ -81,7 +81,7 @@ spec:
         # $PROJECT:$REGION:$INSTANCE
         # [START proxy_container]
         - name: cloudsql-proxy
-          image: gcr.io/cloudsql-docker/gce-proxy:1.17
+          image: gcr.io/cloudsql-docker/gce-proxy:1.20.0
           resources:
             limits:
               memory: 100Mi
