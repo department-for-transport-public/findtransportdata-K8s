@@ -32,14 +32,14 @@ steps:
     cat /deploy/test-service.yaml
     fi
 
-#- name: 'gcr.io/cloud-builders/git'
-#  volumes:
-#  - name: 'manifestsvolume'
-#    path: '/deploy'
-#  id: Replace ckan vars
-#  secretEnv: ['CLIENT_ID', 'CLIENT_SECRET']
-#  entrypoint: 'bash'
-#  args:
+- name: 'gcr.io/cloud-builders/git'
+  volumes:
+  - name: 'manifestsvolume'
+    path: '/deploy'
+  id: Replace ckan vars
+  secretEnv: ['CLIENT_ID', 'CLIENT_SECRET']
+  entrypoint: 'bash'
+  args:
 #  - '-c'
 #  - |
 #    sed -i "s#_CKAN_SITE_URL#${_CKAN_SITE_URL}#g" manifests/ckan-deployment.yaml
