@@ -28,57 +28,58 @@ steps:
     if [[ $PROJECT_ID -eq "dft-rsss-findtransptdata-prod" ]]
     then
     echo "Remove IAP from prod"
-    sed '/beta/d' test-service.yaml > /deploy/ckan-service.yaml
+    sed '/beta/d' manifest/test-service.yaml > /deploy/test-service.yaml
+    cat /deploy/test-service.yaml
     fi
 
-- name: 'gcr.io/cloud-builders/git'
-  volumes:
-  - name: 'manifestsvolume'
-    path: '/deploy'
-  id: Replace ckan vars
-  secretEnv: ['CLIENT_ID', 'CLIENT_SECRET']
-  entrypoint: 'bash'
-  args:
-  - '-c'
-  - |
-    sed -i "s#_CKAN_SITE_URL#${_CKAN_SITE_URL}#g" manifests/ckan-deployment.yaml
-    sed -i "s#_CKAN_SYSADMIN_NAME#${_CKAN_SYSADMIN_NAME}#g" manifests/ckan-deployment.yaml
-    sed -i "s#_CKAN_SYSADMIN_PASSWORD#${_CKAN_SYSADMIN_PASSWORD}#g" manifests/ckan-deployment.yaml
-    sed -i "s#_CKAN_SYSADMIN_EMAIL#${_CKAN_SYSADMIN_EMAIL}#g" manifests/ckan-deployment.yaml
-    sed -i "s#_CKAN_SQLALCHEMY_URL#${_CKAN_SQLALCHEMY_URL}#g" manifests/ckan-deployment.yaml
-    sed -i "s#_CKAN_DATASTORE_WRITE_URL#${_CKAN_DATASTORE_WRITE_URL}#g" manifests/ckan-deployment.yaml
-    sed -i "s#_CKAN_DATASTORE_READ_URL#${_CKAN_DATASTORE_READ_URL}#g" manifests/ckan-deployment.yaml
-    sed -i "s#_CKAN_REDIS_URL#${_CKAN_REDIS_URL}#g" manifests/ckan-deployment.yaml
-    sed -i "s#_GTM_ID#${_GTM_ID}#g" manifests/ckan-deployment.yaml
-    sed -i "s#_WORKLOAD_SVC_ACCT#${_WORKLOAD_SVC_ACCT}#g" manifests/ckanserviceaccount.yaml
-    sed -i "s#_CONNECTIONNAME#${_CONNECTIONNAME}#g" manifests/connectionname_configmap.yaml
-    sed -i "s#_CLOUDSQL_RESOURCE_NAME#${_CLOUDSQL_RESOURCE_NAME}#g" manifests/cloudsql-secrets.yaml
-    sed -i "s#CLIENT_ID#$${CLIENT_ID}#g" manifests/oa-secret.yaml
-    sed -i "s#CLIENT_SECRET#$${CLIENT_SECRET}#g" manifests/oa-secret.yaml
-    sed -i "s#_DOMAINNAME#${_DOMAINNAME}#g" manifests/managed-cert.yaml
-    cp manifests/oa-secret.yaml /deploy/oa-secret.yaml
-    cp manifests/ckan-deployment.yaml /deploy/ckan-deployment.yaml
-    cp manifests/ckanserviceaccount.yaml /deploy/ckanserviceaccount.yaml
-    cp manifests/connectionname_configmap.yaml /deploy/connectionname_configmap.yaml
-    cp manifests/cloudsql-secrets.yaml /deploy/cloudsql-secrets.yaml
-    cp manifests/ckan-pvc.yaml /deploy/ckan-pvc.yaml
-    cp manifests/ckan-service.yaml /deploy/ckan-service.yaml
-    cp manifests/managed-cert.yaml /deploy/managed-cert.yaml
-    cp manifests/ckan-ingress.yaml /deploy/ckan-ingress.yaml
-    cp manifests/iap-backend.yaml /deploy/iap-backend.yaml
-    cp manifests/ssl-redirect.yaml /deploy/ssl-redirect.yaml
-
-- name: "gcr.io/cloud-builders/gke-deploy"
-  volumes:
-  - name: 'manifestsvolume'
-    path: '/deploy'
-  args:
-  - run
-  - --filename=/deploy/
-  - --location=europe-west1
-  - --namespace=${_NAMESPACE}
-  - --cluster=${PROJECT_ID}-cluster
-  timeout: 600s
+#- name: 'gcr.io/cloud-builders/git'
+#  volumes:
+#  - name: 'manifestsvolume'
+#    path: '/deploy'
+#  id: Replace ckan vars
+#  secretEnv: ['CLIENT_ID', 'CLIENT_SECRET']
+#  entrypoint: 'bash'
+#  args:
+#  - '-c'
+#  - |
+#    sed -i "s#_CKAN_SITE_URL#${_CKAN_SITE_URL}#g" manifests/ckan-deployment.yaml
+#    sed -i "s#_CKAN_SYSADMIN_NAME#${_CKAN_SYSADMIN_NAME}#g" manifests/ckan-deployment.yaml
+#    sed -i "s#_CKAN_SYSADMIN_PASSWORD#${_CKAN_SYSADMIN_PASSWORD}#g" manifests/ckan-deployment.yaml
+#    sed -i "s#_CKAN_SYSADMIN_EMAIL#${_CKAN_SYSADMIN_EMAIL}#g" manifests/ckan-deployment.yaml
+#    sed -i "s#_CKAN_SQLALCHEMY_URL#${_CKAN_SQLALCHEMY_URL}#g" manifests/ckan-deployment.yaml
+#    sed -i "s#_CKAN_DATASTORE_WRITE_URL#${_CKAN_DATASTORE_WRITE_URL}#g" manifests/ckan-deployment.yaml
+#    sed -i "s#_CKAN_DATASTORE_READ_URL#${_CKAN_DATASTORE_READ_URL}#g" manifests/ckan-deployment.yaml
+#    sed -i "s#_CKAN_REDIS_URL#${_CKAN_REDIS_URL}#g" manifests/ckan-deployment.yaml
+#    sed -i "s#_GTM_ID#${_GTM_ID}#g" manifests/ckan-deployment.yaml
+#    sed -i "s#_WORKLOAD_SVC_ACCT#${_WORKLOAD_SVC_ACCT}#g" manifests/ckanserviceaccount.yaml
+#    sed -i "s#_CONNECTIONNAME#${_CONNECTIONNAME}#g" manifests/connectionname_configmap.yaml
+#    sed -i "s#_CLOUDSQL_RESOURCE_NAME#${_CLOUDSQL_RESOURCE_NAME}#g" manifests/cloudsql-secrets.yaml
+#    sed -i "s#CLIENT_ID#$${CLIENT_ID}#g" manifests/oa-secret.yaml
+#    sed -i "s#CLIENT_SECRET#$${CLIENT_SECRET}#g" manifests/oa-secret.yaml
+#    sed -i "s#_DOMAINNAME#${_DOMAINNAME}#g" manifests/managed-cert.yaml
+#    cp manifests/oa-secret.yaml /deploy/oa-secret.yaml
+#    cp manifests/ckan-deployment.yaml /deploy/ckan-deployment.yaml
+#    cp manifests/ckanserviceaccount.yaml /deploy/ckanserviceaccount.yaml
+#    cp manifests/connectionname_configmap.yaml /deploy/connectionname_configmap.yaml
+#    cp manifests/cloudsql-secrets.yaml /deploy/cloudsql-secrets.yaml
+#    cp manifests/ckan-pvc.yaml /deploy/ckan-pvc.yaml
+#    cp manifests/ckan-service.yaml /deploy/ckan-service.yaml
+#    cp manifests/managed-cert.yaml /deploy/managed-cert.yaml
+#    cp manifests/ckan-ingress.yaml /deploy/ckan-ingress.yaml
+#    cp manifests/iap-backend.yaml /deploy/iap-backend.yaml
+#    cp manifests/ssl-redirect.yaml /deploy/ssl-redirect.yaml
+#
+#- name: "gcr.io/cloud-builders/gke-deploy"
+#  volumes:
+#  - name: 'manifestsvolume'
+#    path: '/deploy'
+#  args:
+#  - run
+#  - --filename=/deploy/
+#  - --location=europe-west1
+#  - --namespace=${_NAMESPACE}
+#  - --cluster=${PROJECT_ID}-cluster
+#  timeout: 600s
   
 availableSecrets:
   secretManager:
