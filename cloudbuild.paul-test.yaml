@@ -63,7 +63,6 @@ steps:
     cp manifests/connectionname_configmap.yaml /deploy/connectionname_configmap.yaml
     cp manifests/cloudsql-secrets.yaml /deploy/cloudsql-secrets.yaml
     cp manifests/ckan-pvc.yaml /deploy/ckan-pvc.yaml
-#    cp manifests/ckan-service.yaml /deploy/ckan-service.yaml
     cp manifests/managed-cert.yaml /deploy/managed-cert.yaml
     cp manifests/ckan-ingress.yaml /deploy/ckan-ingress.yaml
     cp manifests/iap-backend.yaml /deploy/iap-backend.yaml
