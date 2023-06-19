@@ -25,7 +25,7 @@ steps:
   args:
   - '-c'
   - |
-    if [ "$PROJECT_ID" =  "dft-rsss-findtransptdata-prod" ];
+    if [ "$PROJECT_ID" =  "dft-rsss-findtransptdata-test" ];
     then
     echo "Disable IAP from prod"
     sed '/beta/d' manifests/ckan-service.yaml > /deploy/test-service.yaml
