@@ -28,8 +28,9 @@ steps:
     if [ "$PROJECT_ID" =  "dft-rsss-findtransptdata-test" ];
     then
     echo "Disable IAP from prod"
-    sed '/beta/d' manifests/ckan-service.yaml > /deploy/test-service.yaml
-    cat /deploy/test-service.yaml
+    sed '/beta/d' manifests/ckan-service.yaml > /deploy/ckan-service.yaml
+    echo "Check file contents"
+    cat /deploy/ckan-service.yaml
     fi
 
 - name: 'gcr.io/cloud-builders/git'
