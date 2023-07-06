@@ -5,7 +5,7 @@ steps:
 - name: 'gcr.io/cloud-builders/git'
   volumes:
   - name: 'manifestsvolume'
-    path: '/deploy'
+    path: '/data'
   id: Remove IAP from prod
   entrypoint: 'bash'
   args:
