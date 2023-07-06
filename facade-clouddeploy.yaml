@@ -15,6 +15,7 @@ steps:
     then
     echo "Disable IAP from prod"
     sed '/beta/d' facade/service.yaml > /data/service.yaml
+    cat /data/service.yaml
     fi
 
 - name: 'gcr.io/cloud-builders/git'
