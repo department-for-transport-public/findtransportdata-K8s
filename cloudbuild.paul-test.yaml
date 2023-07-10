@@ -29,8 +29,10 @@ steps:
     then
     echo "Disable IAP from prod"
     sed '/beta/d' manifests/ckan-service.yaml > /deploy/ckan-service.yaml
+    sed -i "s#_DOMAINNAME#${_DOMAINNAME}#g" /deploy/ckan-ingress.yaml
     echo "Check file contents"
     cat /deploy/ckan-service.yaml
+    cat /deploy/ckan-ingress.yaml
     fi
 
 - name: 'gcr.io/cloud-builders/git'
