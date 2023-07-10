@@ -13,7 +13,9 @@ steps:
     then
     echo "Update ingress static ip"
     sed -i "s#k8s-static-ip#k8-ckan-ip#g" manifests/ckan-ingress.yaml
+    sed -i "s#_DOMAINNAME#${_DOMAINNAME}#g" manifests/ckan-ingress.yaml
     cp manifests/ckan-ingress.yaml /deploy/ckan-ingress.yaml
+    cat /deploy/ckan-ingress.yaml
     fi
 
 - name: 'gcr.io/cloud-builders/git'
@@ -29,10 +31,8 @@ steps:
     then
     echo "Disable IAP from prod"
     sed '/beta/d' manifests/ckan-service.yaml > /deploy/ckan-service.yaml
-    sed -i "s#_DOMAINNAME#${_DOMAINNAME}#g" /deploy/ckan-ingress.yaml
     echo "Check file contents"
     cat /deploy/ckan-service.yaml
-    cat /deploy/ckan-ingress.yaml
     fi
 
 - name: 'gcr.io/cloud-builders/git'
