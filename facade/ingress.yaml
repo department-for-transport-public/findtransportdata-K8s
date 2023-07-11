@@ -9,7 +9,7 @@ metadata:
     networking.gke.io/v1beta1.FrontendConfig: ssl-redirect
 spec:
   rules:
-  - hosts: _DOMAINNAME
+  - hosts: _DOMAIN_NAME
     http:
       paths:
       - path: /*
