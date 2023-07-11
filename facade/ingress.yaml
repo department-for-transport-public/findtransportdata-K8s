@@ -9,7 +9,7 @@ metadata:
     networking.gke.io/v1beta1.FrontendConfig: ssl-redirect
 spec:
   rules:
-  - hosts: _DOMAIN_NAME
+  - host: test.findtransportdata.dft.gov.uk
     http:
       paths:
       - path: /*
