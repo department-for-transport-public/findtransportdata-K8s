@@ -52,7 +52,8 @@ steps:
     cp facade/cloudsql-secrets.yaml /data/cloudsql-secrets.yaml
     cat /data/deployment.yaml   
     cat /data/cloudsql-secrets.yaml
-    
+    cat /data/ingress.yaml
+ 
 - name: "gcr.io/cloud-builders/gke-deploy"
   volumes:
     - name: 'manifestsvolume'
