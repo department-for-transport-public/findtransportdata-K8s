@@ -1,6 +1,22 @@
 steps:
 
 - name: 'gcr.io/cloud-builders/git'
+  volumes:
+  - name: 'manifestsvolume'
+    path: '/data'
+  id: Remove IAP from prod
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    if [ "$PROJECT_ID" =  "dft-rsss-findtransptdata-prod" ];
+    then
+    echo "Disable IAP from prod"
+    sed '/beta/d' facade/ckan-service.yaml > /data/service.yaml
+    fi
+
+
+- name: 'gcr.io/cloud-builders/git'
   id: Replace environment variabels
   volumes:
   - name: 'manifestsvolume'
@@ -26,6 +42,7 @@ steps:
     sed -i "s#_CONNECTIONNAME#${_CONNECTIONNAME}#g" facade/connectionname_configmap.yaml
     sed -i "s#_WORKLOAD_SVC_ACCT#${_WORKLOAD_SVC_ACCT}#g" facade/ckanserviceaccount.yaml
     sed -i "s#_CLOUDSQL_RESOURCE_NAME#${_CLOUDSQL_RESOURCE_NAME}#g" facade/cloudsql-secrets.yaml
+    sed -i "s#_DOMAIN_NAME#${_DOMAIN_NAME}#g" facade/ingress.yaml
     cp facade/connectionname_configmap.yaml /data/connectionname_configmap.yaml
     cp facade/ingress.yaml /data/ingress.yaml
     cp facade/service.yaml /data/service.yaml
@@ -35,7 +52,8 @@ steps:
     cp facade/cloudsql-secrets.yaml /data/cloudsql-secrets.yaml
     cat /data/deployment.yaml   
     cat /data/cloudsql-secrets.yaml
-    
+    cat /data/ingress.yaml
+ 
 - name: "gcr.io/cloud-builders/gke-deploy"
   volumes:
     - name: 'manifestsvolume'

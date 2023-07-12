@@ -13,6 +13,7 @@ steps:
     then
     echo "Update ingress static ip"
     sed -i "s#k8s-static-ip#k8-ckan-ip#g" manifests/ckan-ingress.yaml
+    sed -i "s#_DOMAINNAME#${_DOMAINNAME}#g" manifests/ckan-ingress.yaml
     cp manifests/ckan-ingress.yaml /deploy/ckan-ingress.yaml
     fi
 
@@ -56,6 +57,7 @@ steps:
     sed -i "s#CLIENT_ID#$${CLIENT_ID}#g" manifests/oa-secret.yaml
     sed -i "s#CLIENT_SECRET#$${CLIENT_SECRET}#g" manifests/oa-secret.yaml
     sed -i "s#_DOMAINNAME#${_DOMAINNAME}#g" manifests/managed-cert.yaml
+    sed -i "s#_DOMAINNAME#${_DOMAINNAME}#g" manifests/ckan-ingress.yaml
     cp manifests/oa-secret.yaml /deploy/oa-secret.yaml
     cp manifests/ckan-deployment.yaml /deploy/ckan-deployment.yaml
     cp manifests/ckanserviceaccount.yaml /deploy/ckanserviceaccount.yaml
@@ -67,6 +69,7 @@ steps:
     cp manifests/ckan-ingress.yaml /deploy/ckan-ingress.yaml
     cp manifests/iap-backend.yaml /deploy/iap-backend.yaml
     cp manifests/ssl-redirect.yaml /deploy/ssl-redirect.yaml
+    cp manifests/ckan-ingress.yaml /deploy/ckan-ingress.yaml
 
 - name: "gcr.io/cloud-builders/gke-deploy"
   volumes:
