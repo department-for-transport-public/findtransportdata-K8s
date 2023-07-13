@@ -12,7 +12,7 @@ steps:
     if [ "$PROJECT_ID" =  "dft-rsss-findtransptdata-prod" ];
     then
     echo "Disable IAP from prod"
-    sed '/beta/d' facade/ckan-service.yaml > /data/service.yaml
+    sed '/beta/d' facade/service.yaml > /data/service.yaml
     fi
 
 
