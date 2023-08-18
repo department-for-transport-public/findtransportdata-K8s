@@ -4,4 +4,4 @@ metadata:
   name: facade-managed-cert
 spec:
   domains:
-    - DOMAIN_NAME
+    - _DOMAIN_NAME
