@@ -34,6 +34,9 @@ steps:
     sed -i "s/£GOV_NOTIFY_KEY/${_GOV_NOTIFY_KEY}/g" /data/deployment.yaml
     sed -i "s/£GOV_NOTIFY_CONTACT_PAGE_TEMPLATE_ID/${_GOV_NOTIFY_CONTACT_PAGE_TEMPLATE_ID}/g" /data/deployment.yaml
     sed -i "s/£GOV_NOTIFY_CONTACT_INFO_EMAIL_TO/${_GOV_NOTIFY_CONTACT_INFO_EMAIL_TO}/g" /data/deployment.yaml
+    sed -i "s/£GOV_NOTIFY_CONTACT_PAGE_ADMIN_VIEW_TEMPLATE_ID/${_GOV_NOTIFY_CONTACT_PAGE_ADMIN_VIEW_TEMPLATE_ID}/g" /data/deployment.yaml
+    sed -i "s/£GOV_NOTIFY_CONTACT_PAGE_PUBLISHER_VIEW_TEMPLATE_ID/${_GOV_NOTIFY_CONTACT_PAGE_PUBLISHER_VIEW_TEMPLATE_ID}/g" /data/deployment.yaml
+    sed -i "s/£GOV_NOTIFY_PUBLISHER_WELCOME_TEMPLATE_ID/${_GOV_NOTIFY_PUBLISHER_WELCOME_TEMPLATE_ID}/g" /data/deployment.yaml
     sed -i "s#£FACADE_SEQUELIZE_URL#${_FACADE_SEQUELIZE_URL}#g" /data/deployment.yaml
     sed -i "s/£REDIS_HOST/${_REDIS_HOST}/g" /data/deployment.yaml
     sed -i "s/£REDIS_PORT/${_REDIS_PORT}/g" /data/deployment.yaml
