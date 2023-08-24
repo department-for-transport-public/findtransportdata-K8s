@@ -3,5 +3,6 @@ kind: FrontendConfig
 metadata:
   name: ssl-redirect
 spec:
+  sslPolicy: "_SSL_POLICY"
   redirectToHttps:
     enabled: true
