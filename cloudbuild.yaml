@@ -14,7 +14,9 @@ steps:
     echo "Update ingress static ip"
     sed -i "s#k8s-static-ip#k8-ckan-ip#g" manifests/ckan-ingress.yaml
     sed -i "s#_DOMAINNAME#${_DOMAINNAME}#g" manifests/ckan-ingress.yaml
+    sed -i "s#_SSL_POLICY#${_SSL_POLICY}#g" manifests/ssl-redirect.yaml
     cp manifests/ckan-ingress.yaml /deploy/ckan-ingress.yaml
+    cp manifests/ssl-redirect.yaml /deploy/ssl-redirect.yaml
     fi
 
 - name: 'gcr.io/cloud-builders/git'
@@ -57,6 +59,7 @@ steps:
     sed -i "s#CLIENT_ID#$${CLIENT_ID}#g" manifests/oa-secret.yaml
     sed -i "s#CLIENT_SECRET#$${CLIENT_SECRET}#g" manifests/oa-secret.yaml
     sed -i "s#_DOMAINNAME#${_DOMAINNAME}#g" manifests/managed-cert.yaml
+    sed -i "s#_SSL_POLICY#${_SSL_POLICY}#g" manifests/ssl-redirect.yaml
     sed -i "s#_DOMAINNAME#${_DOMAINNAME}#g" manifests/ckan-ingress.yaml
     cp manifests/oa-secret.yaml /deploy/oa-secret.yaml
     cp manifests/ckan-deployment.yaml /deploy/ckan-deployment.yaml
@@ -65,11 +68,13 @@ steps:
     cp manifests/cloudsql-secrets.yaml /deploy/cloudsql-secrets.yaml
     cp manifests/ckan-pvc.yaml /deploy/ckan-pvc.yaml
     cp manifests/ckan-service.yaml /deploy/ckan-service.yaml
+    cp manifests/ssl-redirect.yaml /deploy/ssl-redirect.yaml
     cp manifests/managed-cert.yaml /deploy/managed-cert.yaml
     cp manifests/ckan-ingress.yaml /deploy/ckan-ingress.yaml
     cp manifests/iap-backend.yaml /deploy/iap-backend.yaml
     cp manifests/ssl-redirect.yaml /deploy/ssl-redirect.yaml
     cp manifests/ckan-ingress.yaml /deploy/ckan-ingress.yaml
+    cat /deploy/ssl-redirect.yaml
 
 - name: "gcr.io/cloud-builders/gke-deploy"
   volumes:
