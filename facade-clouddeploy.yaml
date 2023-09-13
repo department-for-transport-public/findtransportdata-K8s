@@ -30,6 +30,7 @@ steps:
     sed -i "s#£API_URL#${_CKAN_API_URL}#g" /data/deployment.yaml
     sed -i "s/£FACADE_SECRET_KEY/${_FACADE_SECRET_KEY}/g" /data/deployment.yaml
     sed -i "s/£GOV_NOTIFY_PUBLISHER_REQUEST_EMAIL_TO/${_GOV_NOTIFY_PUBLISHER_REQUEST_EMAIL_TO}/g" /data/deployment.yaml
+    sed -i "s/£GOV_NOTIFY_PUBLISHER_REQUEST_TEMPLATE_ID/${_GOV_NOTIFY_PUBLISHER_REQUEST_TEMPLATE_ID}/g" /data/deployment.yaml
     sed -i "s/£GOV_NOTIFY_PUBLISHER_WELCOME_TEMPLATE_ID/${_GOV_NOTIFY_PUBLISHER_WELCOME_TEMPLATE_ID}/g" /data/deployment.yaml
     sed -i "s/£GOV_NOTIFY_REJECT_DATASET_EMAIL_TO_PUBLISHER/${_GOV_NOTIFY_REJECT_DATASET_EMAIL_TO_PUBLISHER}/g" /data/deployment.yaml
     sed -i "s/£GOV_NOTIFY_KEY/${_GOV_NOTIFY_KEY}/g" /data/deployment.yaml
