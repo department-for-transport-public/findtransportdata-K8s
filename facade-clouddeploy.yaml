@@ -47,16 +47,20 @@ steps:
     sed -i "s#_CONNECTIONNAME#${_CONNECTIONNAME}#g" facade/connectionname_configmap.yaml
     sed -i "s#_WORKLOAD_SVC_ACCT#${_WORKLOAD_SVC_ACCT}#g" facade/ckanserviceaccount.yaml
     sed -i "s#_CLOUDSQL_RESOURCE_NAME#${_CLOUDSQL_RESOURCE_NAME}#g" facade/cloudsql-secrets.yaml
+    sed -i "s#_SSL_POLICY#${_SSL_POLICY}#g" facade/ssl-redirect.yaml
     sed -i "s#_DOMAIN_NAME#${_DOMAIN_NAME}#g" facade/ingress.yaml
     cp facade/connectionname_configmap.yaml /data/connectionname_configmap.yaml
     cp facade/ingress.yaml /data/ingress.yaml
+    cp facade/ssl-redirect.yaml /data/ssl-redirect.yaml
     cp facade/cloudsql-secrets.yaml /data/cloudsql-secrets.yaml
     cp facade/ckanserviceaccount.yaml /data/ckanserviceaccount.yaml
     cp facade/facade-pvc.yaml /data/facade-pvc.yaml
     cp facade/cloudsql-secrets.yaml /data/cloudsql-secrets.yaml
+    cp facade/service.yaml /data/service.yaml
     cat /data/deployment.yaml   
     cat /data/cloudsql-secrets.yaml
     cat /data/ingress.yaml
+    cat /data/ssl-redirect.yaml
  
 - name: "gcr.io/cloud-builders/gke-deploy"
   volumes:
