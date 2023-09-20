@@ -55,6 +55,7 @@ steps:
     cp facade/ckanserviceaccount.yaml /data/ckanserviceaccount.yaml
     cp facade/facade-pvc.yaml /data/facade-pvc.yaml
     cp facade/cloudsql-secrets.yaml /data/cloudsql-secrets.yaml
+    cp facade/service.yaml /data/service.yaml
     cat /data/deployment.yaml   
     cat /data/cloudsql-secrets.yaml
     cat /data/ingress.yaml
