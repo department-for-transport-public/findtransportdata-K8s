@@ -22,7 +22,7 @@ spec:
       serviceAccountName: ckanserviceaccount
       containers:
         - name: facade
-          image: europe-docker.pkg.dev/dft-rsss-findtransptdata-dev/dft-nap/facade:3e91b9d
+          image: europe-docker.pkg.dev/dft-rsss-findtransptdata-dev/dft-nap/facade:4b37353
           resources:
             limits:
                #memory: 512Mi
@@ -57,20 +57,28 @@ spec:
             value: £CKAN_API_KEY
           - name: GOV_NOTIFY_PUBLISHER_REQUEST_TEMPLATE_ID
             value: £GOV_NOTIFY_PUBLISHER_REQUEST_TEMPLATE_ID
+          - name: GOV_NOTIFY_PUBLISHER_WELCOME_TEMPLATE_ID
+            value: £GOV_NOTIFY_PUBLISHER_WELCOME_TEMPLATE_ID
           - name: GOV_NOTIFY_PUBLISHER_REQUEST_EMAIL_TO
             value: £GOV_NOTIFY_PUBLISHER_REQUEST_EMAIL_TO
+          - name: GOV_NOTIFY_CONTACT_PAGE_ADMIN_VIEW_TEMPLATE_ID
+            value: £GOV_NOTIFY_CONTACT_PAGE_ADMIN_VIEW_TEMPLATE_ID
+          - name: GOV_NOTIFY_CONTACT_PAGE_PUBLISHER_VIEW_TEMPLATE_ID
+            value: £GOV_NOTIFY_CONTACT_PAGE_PUBLISHER_VIEW_TEMPLATE_ID
+          - name: GOV_NOTIFY_NEW_PUBLISHER_ACCOUNT_REQUEST_TEMPLATE_ID 
+            value: £GOV_NOTIFY_NEW_PUBLISHER_ACCOUNT_REQUEST_TEMPLATE_ID
+          - name: GOV_NOTIFY_REJECT_DATASET_EMAIL_TO_PUBLISHER
+            value: £GOV_NOTIFY_REJECT_DATASET_EMAIL_TO_PUBLISHER
+          - name: GOV_NOTIFY_REJECT_PUBLISHER_REQUEST_TEMPLATE_ID
+            value: £GOV_NOTIFY_REJECT_PUBLISHER_REQUEST_TEMPLATE_ID
+          - name: GOV_NOTIFY_RESET_PASSWORD_TEMPLATE_ID
+            value: £GOV_NOTIFY_RESET_PASSWORD_TEMPLATE_ID
           - name: GOV_NOTIFY_KEY
             value: £GOV_NOTIFY_KEY
           - name: GOV_NOTIFY_CONTACT_PAGE_TEMPLATE_ID
             value: £GOV_NOTIFY_CONTACT_PAGE_TEMPLATE_ID
           - name: GOV_NOTIFY_CONTACT_INFO_EMAIL_TO
             value: £GOV_NOTIFY_CONTACT_INFO_EMAIL_TO
-          - name: GOV_NOTIFY_CONTACT_PAGE_ADMIN_VIEW_TEMPLATE_ID
-            value: £GOV_NOTIFY_CONTACT_PAGE_ADMIN_VIEW_TEMPLATE_ID
-          - name: GOV_NOTIFY_CONTACT_PAGE_PUBLISHER_VIEW_TEMPLATE_ID
-            value: £GOV_NOTIFY_CONTACT_PAGE_PUBLISHER_VIEW_TEMPLATE_ID
-          - name: GOV_NOTIFY_PUBLISHER_WELCOME_TEMPLATE_ID
-            value: £GOV_NOTIFY_PUBLISHER_WELCOME_TEMPLATE_ID
           - name: FACADE_SEQUELIZE_URL
             value: £FACADE_SEQUELIZE_URL
           - name: REDIS_HOST
